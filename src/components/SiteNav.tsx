@@ -3,6 +3,14 @@ import { Link } from '@tanstack/react-router'
 import { X } from 'lucide-react'
 import { COUPON } from '~/data/shop'
 
+const TICKER = [
+  `Launch offer — code ${COUPON} for 10% off`,
+  'Free shipping on 12 & 24 packs',
+  'Ships across India · 4–7 days',
+  '50mg caffeine + 50mg L-theanine · 1:1',
+  'Zero sugar · 3.5 kcal per can',
+]
+
 const NAV_LINKS = [
   { label: 'The Science', href: '/#science' },
   { label: 'Ingredients', href: '/#ingredients' },
@@ -31,18 +39,28 @@ export function SiteNav() {
   return (
     <>
       {promo && (
-        <div className="relative z-[60] flex items-center justify-center bg-lime px-10 py-2 text-center">
-          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-bg md:text-[11px]">
-            Launch offer — use code <span className="underline">{COUPON}</span> for
-            10% off your first order
-          </p>
+        <div className="relative z-[60] overflow-hidden bg-lime py-1.5">
+          <div className="flex w-max animate-marquee-fast whitespace-nowrap">
+            {[0, 1].map((k) => (
+              <div key={k} className="flex shrink-0">
+                {TICKER.map((t, i) => (
+                  <span
+                    key={i}
+                    className="mx-6 font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-bg"
+                  >
+                    {t} <span className="ml-6 opacity-50">//</span>
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
           <button
             type="button"
             onClick={() => setPromo(false)}
             aria-label="Dismiss offer"
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-bg transition-opacity hover:opacity-70"
+            className="absolute right-0 top-0 flex h-full items-center bg-lime pl-2 pr-3 text-bg transition-opacity hover:opacity-70"
           >
-            <X size={16} />
+            <X size={14} />
           </button>
         </div>
       )}

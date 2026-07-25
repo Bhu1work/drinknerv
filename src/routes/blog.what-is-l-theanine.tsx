@@ -65,8 +65,9 @@ function Post() {
         doctor before adding any new supplement or functional drink.
       </AP>
       <AP>
-        In NERV FOCUS, L-Theanine is paired 1:1 with caffeine at 20&nbsp;mg each — the
-        combination we dig into in our companion post on why the two work better together.
+        In NERV FOCUS, L-Theanine is paired 1:1 with caffeine at 50&nbsp;mg each per
+        250&nbsp;ml can — the combination we dig into in our companion post on why the
+        two work better together.
       </AP>
     </ArticleShell>
   )

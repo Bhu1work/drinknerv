@@ -62,8 +62,8 @@ function Post() {
         A lot of the research uses roughly equal amounts of each, which is why a 1:1
         ratio shows up so often in products built around this effect. It is not a magic
         number so much as a well-trodden starting point that balances the stimulation of
-        caffeine against the smoothing effect of L-Theanine. NERV FOCUS uses 20&nbsp;mg
-        of each per can for exactly this reason.
+        caffeine against the smoothing effect of L-Theanine. NERV FOCUS uses 50&nbsp;mg
+        of each per 250&nbsp;ml can for exactly this reason.
       </AP>
 
       <AH2>The practical takeaway</AH2>
