@@ -6,7 +6,28 @@ import {
   useReducedMotion,
   useScroll,
   useSpring,
+  useTransform,
+  useVelocity,
 } from 'framer-motion'
+
+/* ------------------------------ useScrollSpin ----------------------------- */
+
+/**
+ * Apple-style scroll rotation: returns a rotateY MotionValue driven by scroll
+ * velocity — spins one way scrolling down, reverses scrolling up, springs back
+ * to front-facing when scrolling stops. Zero for reduced motion.
+ */
+export function useScrollSpin(max = 38) {
+  const reduced = useReducedMotion()
+  const { scrollY } = useScroll()
+  const velocity = useVelocity(scrollY)
+  const smooth = useSpring(velocity, { stiffness: 170, damping: 26, mass: 0.5 })
+  return useTransform(smooth, (v) => {
+    if (reduced) return 0
+    const clamped = Math.max(-1400, Math.min(1400, v))
+    return (clamped / 1400) * max
+  })
+}
 
 /* ------------------------------- StaggerLine ------------------------------ */
 

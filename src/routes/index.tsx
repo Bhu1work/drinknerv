@@ -5,6 +5,7 @@ import {
   motion,
   useReducedMotion,
   useSpring,
+  useTransform,
 } from 'framer-motion'
 import {
   ArrowDownRight,
@@ -28,6 +29,7 @@ import {
   Preloader,
   ScrollProgress,
   StaggerLine,
+  useScrollSpin,
 } from '~/components/fx'
 import {
   FLAVORS,
@@ -69,6 +71,9 @@ function Hero({ flavor }: { flavor: FlavorId }) {
   const rx = useSpring(0, { stiffness: 90, damping: 16 })
   const ry = useSpring(0, { stiffness: 90, damping: 16 })
   const reduced = useReducedMotion()
+  // scroll-linked spin: down = one way, up = reverse (added to mouse tilt)
+  const spin = useScrollSpin(38)
+  const totalRy = useTransform<number, number>([ry, spin], ([m, s]) => m + s)
 
   function onMove(e: React.MouseEvent) {
     if (reduced || !areaRef.current) return
@@ -107,23 +112,27 @@ function Hero({ flavor }: { flavor: FlavorId }) {
             className="pointer-events-none absolute h-[70%] w-[70%] rounded-full blur-[90px]"
             style={{ background: f.tint }}
           />
-          <motion.div
-            style={{ rotateX: rx, rotateY: ry }}
-            className="animate-float relative z-10"
-          >
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={flavor}
-                src={f.img}
-                alt={`NERV FOCUS ${f.name} can — zero sugar, caffeine + L-theanine`}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 1.05 }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="h-[340px] w-auto object-contain drop-shadow-[0_40px_60px_rgba(0,0,0,0.7)] sm:h-[410px] md:h-[520px]"
-              />
-            </AnimatePresence>
-          </motion.div>
+          {/* float (CSS) and tilt/spin (framer) on separate layers so neither
+              transform overrides the other */}
+          <div className="animate-float relative z-10">
+            <motion.div
+              data-can-rig
+              style={{ rotateX: rx, rotateY: totalRy }}
+            >
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={flavor}
+                  src={f.img}
+                  alt={`NERV FOCUS ${f.name} can — zero sugar, caffeine + L-theanine`}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 1.05 }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                  className="h-[340px] w-auto object-contain drop-shadow-[0_40px_60px_rgba(0,0,0,0.7)] sm:h-[410px] md:h-[520px]"
+                />
+              </AnimatePresence>
+            </motion.div>
+          </div>
           {/* HUD annotations */}
           <span className="absolute left-2 top-8 hidden font-mono text-[10px] uppercase tracking-[0.3em] text-teal md:block">
             UNIT.00{flavor === 'orange' ? 1 : 2}
@@ -547,6 +556,7 @@ function Flavors({
   setFlavor: (f: FlavorId) => void
 }) {
   const f = FLAVORS[flavor]
+  const spin = useScrollSpin(30)
 
   return (
     <section id="flavors" className="scroll-mt-24 relative overflow-hidden">
@@ -602,12 +612,16 @@ function Flavors({
             Order {f.name} →
           </button>
         </div>
-        <div className="relative flex h-[380px] items-center justify-center md:h-[520px]">
+        <div
+          className="relative flex h-[380px] items-center justify-center md:h-[520px]"
+          style={{ perspective: 900 }}
+        >
           <AnimatePresence mode="wait">
             <motion.img
               key={flavor}
               src={f.img}
               alt={`NERV FOCUS ${f.name} can`}
+              style={{ rotateY: spin }}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 1.05 }}
