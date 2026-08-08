@@ -24,7 +24,8 @@ export function SiteFooter() {
             </span>
           </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-sage">
-            A cognitive performance system designed for the modern mind.
+            Zero added sugar. L-theanine + caffeine, ashwagandha and brahmi.
+            250 ml. Made in Bharat.
           </p>
           <p className="mt-6 max-w-sm border border-red/50 bg-red/10 p-3 font-mono text-[10px] uppercase leading-relaxed tracking-[0.15em] text-red">
             Warning: not recommended for children, pregnant or lactating women, or

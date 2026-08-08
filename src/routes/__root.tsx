@@ -13,9 +13,9 @@ export const Route = createRootRoute({
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'theme-color', content: '#04080a' },
       ...seo({
-        title: 'NERV FOCUS — Cognitive Performance System',
+        title: 'NERV FOCUS — L-Theanine + Caffeine · Zero Sugar',
         description:
-          'NERV FOCUS is a zero-sugar cognitive performance beverage. 20mg caffeine + 20mg L-theanine. Get out of your monkey mind.',
+          'NERV FOCUS is a zero-added-sugar 250 ml beverage with 50 mg caffeine and 50 mg L-theanine, plus ashwagandha, brahmi and green tea extract.',
       }),
     ],
     links: [

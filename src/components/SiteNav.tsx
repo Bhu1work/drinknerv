@@ -8,7 +8,8 @@ const TICKER = [
   'Free shipping on 12 & 24 packs',
   'Ships across India · 4–7 days',
   '50mg caffeine + 50mg L-theanine · 1:1',
-  'Zero sugar · 3.5 kcal per can',
+  'Zero added sugar · 250ml',
+  'Ashwagandha + Brahmi',
 ]
 
 const NAV_LINKS = [

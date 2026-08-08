@@ -12,8 +12,6 @@ import {
   ArrowRight,
   ChevronDown,
   Crosshair,
-  Droplets,
-  Flame,
   Leaf,
   Waves,
   Zap,
@@ -33,6 +31,7 @@ import {
 } from '~/components/fx'
 import {
   FLAVORS,
+  NUTRITION,
   PACKS,
   buyUrl,
   type FlavorId,
@@ -137,13 +136,14 @@ function Hero({ flavor }: { flavor: FlavorId }) {
           <span className="absolute left-2 top-8 hidden font-mono text-[10px] uppercase tracking-[0.3em] text-teal md:block">
             UNIT.00{flavor === 'orange' ? 1 : 2}
           </span>
-          <span className="absolute right-0 top-20 hidden font-mono text-[10px] tracking-[0.2em] text-teal md:block">
+          {/* HUD labels sit in the two corners the angled can leaves free */}
+          <span className="absolute left-2 top-[3.25rem] hidden font-mono text-[10px] tracking-[0.2em] text-teal md:block">
             C8H10N4O2 · C7H14N2O3
           </span>
-          <span className="absolute bottom-20 left-0 hidden border border-lime/50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.3em] text-lime md:block">
+          <span className="absolute bottom-[3.25rem] right-4 hidden border border-lime/50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.3em] text-lime md:block">
             LOCKED
           </span>
-          <span className="absolute bottom-8 right-4 hidden font-mono text-[10px] uppercase tracking-[0.3em] text-teal md:block">
+          <span className="absolute bottom-6 right-4 hidden font-mono text-[10px] uppercase tracking-[0.3em] text-teal md:block">
             250ML // ZERO SUGAR
           </span>
         </div>
@@ -154,12 +154,12 @@ function Hero({ flavor }: { flavor: FlavorId }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="flex flex-wrap gap-3"
+            className="flex flex-col gap-1"
           >
-            {['Zero Sugar', '3.5 kcal / can'].map((c) => (
+            {['Zero Sugar', '1 kcal / can'].map((c) => (
               <span
                 key={c}
-                className="border border-lime/60 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.25em] text-lime"
+                className="font-mono text-xs font-bold uppercase tracking-[0.25em] text-lime"
               >
                 {c}
               </span>
@@ -176,8 +176,8 @@ function Hero({ flavor }: { flavor: FlavorId }) {
             transition={{ delay: 0.85, duration: 0.6 }}
             className="mt-6 max-w-md text-[15px] leading-relaxed text-sage"
           >
-            NERV is not an energy drink. It&rsquo;s a cognitive performance system
-            designed for the modern mind. Stay locked in. Block distractions.
+            250 ml, zero sugar. Caffeine and L-theanine paired 1:1, with
+            ashwagandha, brahmi and green tea extract. Outwork the noise.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 16 }}
@@ -211,7 +211,7 @@ function Hero({ flavor }: { flavor: FlavorId }) {
             {[
               ['50mg', 'Caffeine'],
               ['50mg', 'L-Theanine'],
-              ['4–6hr', 'Focus'],
+              ['0g', 'Added Sugar'],
             ].map(([v, l]) => (
               <div key={l} className="bg-bg py-3 pr-3">
                 <p className="font-display text-3xl text-lime">{v}</p>
@@ -227,66 +227,12 @@ function Hero({ flavor }: { flavor: FlavorId }) {
   )
 }
 
-/* ------------------------------- benefits --------------------------------- */
-
-const BENEFITS = [
-  {
-    icon: Crosshair,
-    title: 'Enhanced Focus',
-    body: 'Stay locked in. Block distractions. Tunnel vision for your most critical tasks.',
-  },
-  {
-    icon: Zap,
-    title: 'Mental Clarity',
-    body: 'Think sharp. Make better decisions without the fog of traditional stimulants.',
-  },
-  {
-    icon: Waves,
-    title: 'Flow State',
-    body: 'Enter the zone. A sustained, smooth energy curve that avoids crashes.',
-  },
-]
-
-function Benefits() {
-  return (
-    <section className="mx-auto max-w-6xl px-5 py-20 md:py-28">
-      <Eyebrow>§01 / Cognitive Enhancement</Eyebrow>
-      <h2 className="mt-4 font-display text-4xl uppercase text-cream md:text-6xl">
-        <StaggerLine text="A precision tool" />
-        <StaggerLine text="for the operator brain." lime />
-      </h2>
-      <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-3">
-        {BENEFITS.map((b, i) => (
-          <motion.div
-            key={b.title}
-            initial={{ opacity: 0, y: 32 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ delay: i * 0.12, duration: 0.6 }}
-            className="corner-brackets group bg-panel p-8 transition-colors hover:bg-panel/60"
-          >
-            <b.icon
-              className="text-lime transition-transform duration-300 group-hover:scale-110"
-              size={28}
-              strokeWidth={1.5}
-            />
-            <h3 className="mt-6 font-display text-3xl uppercase text-cream">
-              {b.title}
-            </h3>
-            <p className="mt-3 text-sm leading-relaxed text-sage">{b.body}</p>
-          </motion.div>
-        ))}
-      </div>
-    </section>
-  )
-}
-
 /* -------------------------------- science --------------------------------- */
 
 const METRICS: Array<[string, string, number]> = [
-  ['Caffeine · Stimulation', '50mg', 0.5],
-  ['L-Theanine · Smoothing', '50mg', 0.5],
-  ['Cognitive Output', 'MAX', 1],
+  ['Caffeine · Stimulant', '50mg', 0.5],
+  ['L-Theanine · Amino acid', '50mg', 0.5],
+  ['Vitamin C · % RDA', '100%', 1],
 ]
 
 function Science() {
@@ -294,20 +240,21 @@ function Science() {
     <section id="science" className="scroll-mt-24 border-y border-panel bg-panel/25">
       <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 py-20 lg:grid-cols-2 md:py-28">
         <div>
-          <Eyebrow>§02 / The Science</Eyebrow>
+          <Eyebrow>§01 / The Science</Eyebrow>
           <h2 className="mt-4 font-display text-4xl uppercase text-cream md:text-5xl">
             <StaggerLine text="Engineered" />
             <StaggerLine text="synergy." lime />
           </h2>
           <p className="mt-6 text-[15px] leading-relaxed text-sage">
-            We engineered a precise 1:1 ratio of caffeine to L-theanine for a
-            synergistic effect. Caffeine stimulates the central nervous system;
-            L-theanine crosses the blood-brain barrier to promote calm alertness
-            without drowsiness.
+            Every can carries 50 mg of caffeine and 50 mg of L-theanine — a 1:1
+            pairing. Caffeine is a central nervous system stimulant. L-theanine
+            is an amino acid found in tea leaves that crosses the blood-brain
+            barrier and is associated with alpha brain-wave activity.
           </p>
           <p className="mt-4 text-[15px] leading-relaxed text-sage">
-            The result? Clean, sustained cognitive energy. No jitters. No crash.
-            Just pure, focused execution.
+            Alongside them sit two adaptogenic botanicals long used in Ayurvedic
+            practice — ashwagandha (Withania somnifera) and brahmi (Bacopa
+            monnieri) — plus green tea extract and vitamins C, B6 and B12.
           </p>
           <div className="mt-8 flex gap-10 border-t border-panel pt-6">
             <div className="transition-transform duration-300 hover:-translate-y-1">
@@ -317,9 +264,9 @@ function Science() {
               </p>
             </div>
             <div className="transition-transform duration-300 hover:-translate-y-1">
-              <p className="font-display text-4xl text-lime">4–6hr</p>
+              <p className="font-display text-4xl text-lime">100%</p>
               <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-teal">
-                Sustained Energy
+                RDA · Vit C, B6, B12
               </p>
             </div>
           </div>
@@ -380,49 +327,67 @@ function Science() {
 
 /* -------------------------------- nutrition ------------------------------- */
 
-const NUTRITION: Array<[string, string, boolean]> = [
-  ['Energy', '3.5 kcal', false],
-  ['Carbohydrate', '6.9 g', false],
-  ['Total Sugar', '0 g', false],
-  ['Caffeine', '50 mg', true],
-  ['L-Theanine', '50 mg', true],
-  ['Sodium (Electrolyte)', '111.8 mg', false],
-]
-
-function Nutrition() {
+function Nutrition({
+  flavor,
+  setFlavor,
+}: {
+  flavor: FlavorId
+  setFlavor: (f: FlavorId) => void
+}) {
+  const rows = NUTRITION[flavor]
   return (
     <section className="mx-auto max-w-6xl px-5 py-20 md:py-28">
       <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
         <div>
-          <Eyebrow>§03 / Total Transparency</Eyebrow>
+          <Eyebrow>§02 / Total Transparency</Eyebrow>
           <h2 className="mt-4 font-display text-4xl uppercase text-cream md:text-6xl">
             <StaggerLine text="Nothing to" />
             <StaggerLine text="hide." lime />
           </h2>
           <p className="mt-6 max-w-sm text-sm leading-relaxed text-sage">
-            Values per 250 ml can. Sweetened with a natural non-caloric admixture
-            of erythritol and stevia — no added sugar.
+            Approximate values per serving. Serving size 250 ml · 1 serving per
+            can. Sweetened with an admixture of erythritol and steviol glycosides
+            — no added sugar.
+          </p>
+          {/* flavour toggle — the two cans differ slightly */}
+          <div className="mt-6 inline-flex border border-panel p-1">
+            {(Object.keys(NUTRITION) as Array<FlavorId>).map((id) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => setFlavor(id)}
+                className={`px-4 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.2em] transition-colors ${
+                  flavor === id ? 'bg-lime text-bg' : 'text-sage hover:text-lime'
+                }`}
+              >
+                {FLAVORS[id].name}
+              </button>
+            ))}
+          </div>
+          <p className="mt-6 max-w-sm font-mono text-[10px] uppercase leading-relaxed tracking-[0.15em] text-teal">
+            % RDA per serve as per ICMR Recommended Dietary Allowance —
+            Nutrients for Indians 2020, moderate-work men.
           </p>
         </div>
         <div>
-          {NUTRITION.map(([k, v, hi], i) => (
+          {rows.map((r, i) => (
             <motion.div
-              key={k}
+              key={r.label}
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.6 }}
-              transition={{ delay: i * 0.06, duration: 0.5 }}
-              className="flex items-baseline justify-between border-b border-panel py-4"
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ delay: i * 0.04, duration: 0.45 }}
+              className="flex items-baseline justify-between border-b border-panel py-3"
             >
               <span
-                className={`font-mono text-[11px] uppercase tracking-[0.25em] ${hi ? 'text-lime' : 'text-sage'}`}
+                className={`font-mono text-[11px] uppercase tracking-[0.25em] ${r.highlight ? 'text-lime' : 'text-sage'}`}
               >
-                {k}
+                {r.label}
               </span>
               <span
-                className={`font-display text-2xl ${hi ? 'text-lime' : 'text-cream'}`}
+                className={`font-display text-2xl ${r.highlight ? 'text-lime' : 'text-cream'}`}
               >
-                {v}
+                {r.value}
               </span>
             </motion.div>
           ))}
@@ -434,30 +399,39 @@ function Nutrition() {
 
 /* ------------------------------- ingredients ------------------------------ */
 
+/**
+ * Ingredient cards. Each carries the verb printed on the can label plus the
+ * longer explanation on the flip side — this is where the old standalone
+ * "cognitive enhancement" cards now live, tied to the ingredient responsible.
+ */
 const INGREDIENTS = [
   {
     icon: Leaf,
-    spec: '50mg',
+    spec: '50 mg',
     name: 'L-Theanine',
-    back: 'An amino acid from tea leaves. Promotes calm alertness and takes the sharp edge off caffeine.',
+    verb: 'calms',
+    back: 'An amino acid found in tea leaves. It crosses the blood-brain barrier and is associated with alpha brain-wave activity — the state of relaxed, wakeful attention.',
   },
   {
     icon: Zap,
-    spec: '50mg',
+    spec: '50 mg',
     name: 'Caffeine',
-    back: 'A clean, measured dose for alertness and drive. Paired 1:1 so the lift stays smooth.',
+    verb: 'ignites',
+    back: 'A clean, measured dose. Caffeine is a central nervous system stimulant that blocks adenosine, the neurotransmitter behind end-of-day fog.',
   },
   {
-    icon: Droplets,
-    spec: '111.8mg Na',
-    name: 'Electrolytes',
-    back: 'Sodium supports hydration so focus holds steady through long sessions.',
+    icon: Waves,
+    spec: 'Root extract',
+    name: 'Ashwagandha',
+    verb: 'steadies',
+    back: 'Withania somnifera. An adaptogenic root used in Ayurvedic practice for centuries and studied for its role in the body’s stress response.',
   },
   {
-    icon: Flame,
-    spec: '3.5 kcal',
-    name: 'Zero Sugar',
-    back: 'Sweetened with erythritol and stevia. Full flavour. No sugar spike. No crash.',
+    icon: Crosshair,
+    spec: 'Whole extract',
+    name: 'Brahmi',
+    verb: 'sharpens',
+    back: 'Bacopa monnieri. A herb traditionally used in Ayurveda, studied for its role in memory and cognition.',
   },
 ]
 
@@ -499,16 +473,21 @@ function FlipCard({
               {item.spec}
             </span>
           </div>
-          <h3 className="font-display text-3xl uppercase text-cream">
-            {item.name}
-          </h3>
+          <div>
+            <h3 className="font-display text-3xl uppercase text-cream">
+              {item.name}
+            </h3>
+            <p className="mt-1 font-display text-2xl lowercase text-lime">
+              {item.verb}.
+            </p>
+          </div>
         </div>
         <div
           className="absolute inset-0 flex flex-col justify-between bg-lime p-6"
           style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
         >
           <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-bg/60">
-            Function
+            {item.name}
           </p>
           <p className="text-sm font-medium leading-relaxed text-bg">
             {item.back}
@@ -526,21 +505,26 @@ function Ingredients() {
       className="scroll-mt-24 border-y border-panel bg-panel/25"
     >
       <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
-        <Eyebrow>§04 / What&rsquo;s Inside</Eyebrow>
+        <Eyebrow>§03 / What&rsquo;s Inside</Eyebrow>
         <h2 className="mt-4 font-display text-4xl uppercase text-cream md:text-6xl">
           <StaggerLine text="Four inputs." />
-          <StaggerLine text="One protocol." lime />
+          <StaggerLine text="One formulation." lime />
         </h2>
         <p className="mt-5 max-w-2xl text-sm leading-relaxed text-sage">
           A short, functional ingredient list — no sugar, no fillers, nothing you
-          can&rsquo;t pronounce. Per 250 ml can. Tap a card to see what each one
-          does.
+          can&rsquo;t pronounce. Hover or tap a card to read what each one is.
         </p>
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {INGREDIENTS.map((it, i) => (
             <FlipCard key={it.name} item={it} index={i} />
           ))}
         </div>
+        <p className="mt-10 max-w-3xl text-sm leading-relaxed text-sage">
+          Also inside: green tea extract (Camellia sinensis), vitamin C, vitamins
+          B6 and B12, and a carbonated water base sweetened with erythritol and
+          steviol glycosides. Full ingredient list and nutrition are printed on
+          every can.
+        </p>
       </div>
     </section>
   )
@@ -569,7 +553,7 @@ function Flavors({
       />
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 py-20 md:grid-cols-2 md:py-28">
         <div>
-          <Eyebrow>§05 / Select Your Protocol</Eyebrow>
+          <Eyebrow>§04 / Pick Your Flavour</Eyebrow>
           <h2 className="mt-4 font-display text-4xl uppercase text-cream md:text-6xl">
             <StaggerLine text="Two flavors." />
             <StaggerLine text="One mission." lime />
@@ -650,7 +634,7 @@ function Buy({
   return (
     <section id="buy" className="scroll-mt-24 border-y border-panel bg-panel/25">
       <div className="mx-auto max-w-6xl px-5 py-20 text-center md:py-28">
-        <Eyebrow>§06 / Secure Your Supply</Eyebrow>
+        <Eyebrow>§05 / Secure Your Supply</Eyebrow>
         <h2 className="mt-4 font-display text-4xl uppercase text-cream md:text-6xl">
           <StaggerLine text="Deploy your" className="mx-auto w-fit" />
           <StaggerLine text="stack." lime className="mx-auto w-fit" />
@@ -759,16 +743,16 @@ function Buy({
 
 const FAQS = [
   {
-    q: 'Is NERV an energy drink?',
-    a: 'No. While it contains caffeine, NERV is formulated as a cognitive enhancement beverage. L-theanine smooths the caffeine curve, preventing the spike and crash of standard energy drinks and focusing on sustained mental clarity rather than physical hyperactivity.',
+    q: 'What exactly is in a can?',
+    a: 'Per 250 ml can: 50 mg caffeine, 50 mg L-theanine, ashwagandha root extract, brahmi extract, green tea extract, vitamin C, and vitamins B6 and B12 — with zero added sugar. The full ingredient list is printed on every can.',
   },
   {
-    q: 'When should I drink it?',
-    a: 'Consume NERV 15–20 minutes before a session requiring intense focus — deep work, studying, or competitive gaming. Avoid within 6 hours of your intended sleep time.',
+    q: 'How much caffeine is that?',
+    a: 'A 250 ml can carries 50 mg of caffeine — roughly half a standard cup of coffee. The label carries a high-caffeine declaration as required. It is not recommended for children, pregnant or lactating women, or persons sensitive to caffeine.',
   },
   {
     q: 'Are there any calories or sugar?',
-    a: 'Zero sugar, and ultra-low calorie — about 3.5 kcal per 250 ml can — using safe non-caloric sweeteners, so your macros and blood sugar stay untouched.',
+    a: 'Zero added sugar, and ultra-low calorie — about 1 kcal per 250 ml can — sweetened with an admixture of erythritol and steviol glycosides rather than sugar.',
   },
   {
     q: 'Where does NERV ship?',
@@ -781,7 +765,7 @@ function Faq() {
   return (
     <section className="mx-auto max-w-3xl px-5 py-20 md:py-28">
       <div className="text-center">
-        <Eyebrow>§07 / Operational Intel</Eyebrow>
+        <Eyebrow>§06 / Operational Intel</Eyebrow>
         <h2 className="mt-4 font-display text-4xl uppercase text-cream md:text-6xl">
           <StaggerLine text="Frequently" className="mx-auto w-fit" />
           <StaggerLine text="debriefed." lime className="mx-auto w-fit" />
@@ -871,13 +855,12 @@ function Home() {
             'Zero Sugar',
             '50mg Caffeine',
             '50mg L-Theanine',
-            'No Crash',
-            'Protocol 001',
+            'Ashwagandha + Brahmi',
+            '250ml · Zero BS',
           ]}
         />
-        <Benefits />
         <Science />
-        <Nutrition />
+        <Nutrition flavor={flavor} setFlavor={setFlavor} />
         <Ingredients />
         <Flavors flavor={flavor} setFlavor={setFlavor} />
         <Buy flavor={flavor} setFlavor={setFlavor} />
