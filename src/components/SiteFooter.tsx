@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { NervWordmark } from '~/components/NervWordmark'
 import { INSTAGRAM_URL } from '~/data/shop'
 
 const LEGAL = [
@@ -12,15 +13,10 @@ export function SiteFooter() {
     <footer className="border-t border-panel">
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-5 py-16 md:grid-cols-4">
         <div className="md:col-span-2">
-          <div className="flex items-center gap-3">
-            <span className="flex h-8 w-8 items-center justify-center bg-lime font-display text-xl text-bg">
-              N
-            </span>
-            <span className="font-display text-2xl tracking-wide text-cream">
-              NERV{' '}
-              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-sage">
-                /focus
-              </span>
+          <div className="flex items-baseline gap-2.5">
+            <NervWordmark className="h-7 w-auto text-lime" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-sage">
+              /focus
             </span>
           </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-sage">

@@ -19,6 +19,7 @@ import {
 import { SiteNav } from '~/components/SiteNav'
 import { SiteFooter } from '~/components/SiteFooter'
 import { HeroScene } from '~/components/HeroScene'
+import { VitaminTrio } from '~/components/VitaminTrio'
 import {
   Counter,
   CursorGlow,
@@ -232,7 +233,6 @@ function Hero({ flavor }: { flavor: FlavorId }) {
 const METRICS: Array<[string, string, number]> = [
   ['Caffeine · Stimulant', '50mg', 0.5],
   ['L-Theanine · Amino acid', '50mg', 0.5],
-  ['Vitamin C · % RDA', '100%', 1],
 ]
 
 function Science() {
@@ -264,9 +264,9 @@ function Science() {
               </p>
             </div>
             <div className="transition-transform duration-300 hover:-translate-y-1">
-              <p className="font-display text-4xl text-lime">100%</p>
+              <p className="font-display text-4xl text-lime">50mg</p>
               <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-teal">
-                RDA · Vit C, B6, B12
+                Of Each, Per Can
               </p>
             </div>
           </div>
@@ -339,7 +339,7 @@ function Nutrition({
     <section className="mx-auto max-w-6xl px-5 py-20 md:py-28">
       <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
         <div>
-          <Eyebrow>§02 / Total Transparency</Eyebrow>
+          <Eyebrow>§03 / Total Transparency</Eyebrow>
           <h2 className="mt-4 font-display text-4xl uppercase text-cream md:text-6xl">
             <StaggerLine text="Nothing to" />
             <StaggerLine text="hide." lime />
@@ -505,7 +505,7 @@ function Ingredients() {
       className="scroll-mt-24 border-y border-panel bg-panel/25"
     >
       <div className="mx-auto max-w-6xl px-5 py-20 md:py-28">
-        <Eyebrow>§03 / What&rsquo;s Inside</Eyebrow>
+        <Eyebrow>§04 / What&rsquo;s Inside</Eyebrow>
         <h2 className="mt-4 font-display text-4xl uppercase text-cream md:text-6xl">
           <StaggerLine text="Four inputs." />
           <StaggerLine text="One formulation." lime />
@@ -553,7 +553,7 @@ function Flavors({
       />
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-5 py-20 md:grid-cols-2 md:py-28">
         <div>
-          <Eyebrow>§04 / Pick Your Flavour</Eyebrow>
+          <Eyebrow>§05 / Pick Your Flavour</Eyebrow>
           <h2 className="mt-4 font-display text-4xl uppercase text-cream md:text-6xl">
             <StaggerLine text="Two flavors." />
             <StaggerLine text="One mission." lime />
@@ -634,7 +634,7 @@ function Buy({
   return (
     <section id="buy" className="scroll-mt-24 border-y border-panel bg-panel/25">
       <div className="mx-auto max-w-6xl px-5 py-20 text-center md:py-28">
-        <Eyebrow>§05 / Secure Your Supply</Eyebrow>
+        <Eyebrow>§06 / Secure Your Supply</Eyebrow>
         <h2 className="mt-4 font-display text-4xl uppercase text-cream md:text-6xl">
           <StaggerLine text="Deploy your" className="mx-auto w-fit" />
           <StaggerLine text="stack." lime className="mx-auto w-fit" />
@@ -765,7 +765,7 @@ function Faq() {
   return (
     <section className="mx-auto max-w-3xl px-5 py-20 md:py-28">
       <div className="text-center">
-        <Eyebrow>§06 / Operational Intel</Eyebrow>
+        <Eyebrow>§07 / Operational Intel</Eyebrow>
         <h2 className="mt-4 font-display text-4xl uppercase text-cream md:text-6xl">
           <StaggerLine text="Frequently" className="mx-auto w-fit" />
           <StaggerLine text="debriefed." lime className="mx-auto w-fit" />
@@ -860,6 +860,7 @@ function Home() {
           ]}
         />
         <Science />
+        <VitaminTrio />
         <Nutrition flavor={flavor} setFlavor={setFlavor} />
         <Ingredients />
         <Flavors flavor={flavor} setFlavor={setFlavor} />

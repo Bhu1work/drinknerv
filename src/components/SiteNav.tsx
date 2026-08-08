@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Link } from '@tanstack/react-router'
 import { X } from 'lucide-react'
+import { NervWordmark } from '~/components/NervWordmark'
 import { COUPON } from '~/data/shop'
 
 const TICKER = [
@@ -20,15 +21,10 @@ const NAV_LINKS = [
 
 function Wordmark() {
   return (
-    <Link to="/" className="flex items-center gap-3">
-      <span className="flex h-8 w-8 items-center justify-center bg-lime font-display text-xl text-bg">
-        N
-      </span>
-      <span className="font-display text-2xl tracking-wide text-cream">
-        NERV{' '}
-        <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-sage">
-          /focus
-        </span>
+    <Link to="/" className="flex items-baseline gap-2.5">
+      <NervWordmark className="h-6 w-auto text-cream transition-colors hover:text-lime" />
+      <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-sage">
+        /focus
       </span>
     </Link>
   )
