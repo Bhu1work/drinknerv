@@ -30,7 +30,12 @@ export const Route = createRootRoute({
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap',
       },
-      { rel: 'icon', href: '/favicon.ico' },
+      // Google reads the .ico for search results; it needs a size that is a
+      // multiple of 48px, which the multi-resolution file provides.
+      { rel: 'icon', href: '/favicon.ico', sizes: '48x48' },
+      { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
+      { rel: 'apple-touch-icon', href: '/apple-touch-icon.png', sizes: '180x180' },
+      { rel: 'manifest', href: '/site.webmanifest' },
     ],
   }),
   errorComponent: DefaultCatchBoundary,
