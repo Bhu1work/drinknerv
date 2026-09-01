@@ -17,12 +17,15 @@ if (!TOKEN) {
   process.exit(1)
 }
 
-// Mirrors VARIANTS + PACKS in src/data/shop.ts.
+// Mirrors VARIANTS, PACKS and FLAVORS in src/data/shop.ts.
 const VARIANTS = {
   orange: { 6: '43574790619342', 12: '43574790652110', 24: '43574790684878' },
   mango: { 6: '43574790717646', 12: '43574790750414', 24: '43574790783182' },
 }
 const EXPECTED = { 6: 594, 12: 1111, 24: 1999 }
+// Shopify's variant title is what buyers read in the cart drawer and on the
+// hosted checkout, so it has to agree with the name the site shows.
+const FLAVOR_NAMES = { orange: 'Orange Coffee', mango: 'Mango Chilli' }
 
 const ids = Object.values(VARIANTS).flatMap((packs) =>
   Object.values(packs).map((id) => `gid://shopify/ProductVariant/${id}`),
@@ -81,11 +84,15 @@ for (const [flavor, packs] of Object.entries(VARIANTS)) {
     const expected = EXPECTED[pack]
     const priceOk = price === expected
     const stockOk = node.availableForSale
-    if (!priceOk || !stockOk) problems++
+
+    const expectedTitle = `${FLAVOR_NAMES[flavor]} / ${pack}-Pack`
+    const titleOk = node.title === expectedTitle
+    if (!priceOk || !stockOk || !titleOk) problems++
 
     const flags = [
       priceOk ? null : `PRICE differs — site says ₹${expected}`,
       stockOk ? null : 'OUT OF STOCK',
+      titleOk ? null : `NAME differs — site says "${expectedTitle}"`,
     ].filter(Boolean)
 
     console.log(
@@ -99,6 +106,7 @@ for (const [flavor, packs] of Object.entries(VARIANTS)) {
 console.log(
   problems === 0
     ? '\nAll six variants match the site.'
-    : `\n${problems} problem(s) found.`,
+    : `\n${problems} problem(s) found. Fix them in Shopify, or update ` +
+        `VARIANTS / PACKS / FLAVORS in src/data/shop.ts to match.`,
 )
 process.exit(problems === 0 ? 0 : 1)

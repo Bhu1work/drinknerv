@@ -82,7 +82,7 @@ export function MagneticButton({
   href?: string
   onClick?: () => void
 }) {
-  const ref = React.useRef<HTMLAnchorElement | null>(null)
+  const ref = React.useRef<HTMLElement | null>(null)
   const x = useSpring(0, { stiffness: 260, damping: 18 })
   const y = useSpring(0, { stiffness: 260, damping: 18 })
   const reduced = useReducedMotion()
@@ -98,16 +98,31 @@ export function MagneticButton({
     y.set(0)
   }
 
+  const shared = {
+    onClick,
+    onMouseMove: onMove,
+    onMouseLeave: onLeave,
+    style: { x, y },
+    className: `inline-flex cursor-pointer items-center gap-3 ${className}`,
+  }
+
+  // An anchor without an href is not focusable and carries no role, so a
+  // handler-only button (add to cart) has to be a real <button> or it is
+  // unreachable by keyboard and screen readers.
+  if (!href) {
+    return (
+      <motion.button
+        ref={ref as React.Ref<HTMLButtonElement>}
+        type="button"
+        {...shared}
+      >
+        {children}
+      </motion.button>
+    )
+  }
+
   return (
-    <motion.a
-      ref={ref}
-      href={href}
-      onClick={onClick}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      style={{ x, y }}
-      className={`inline-flex cursor-pointer items-center gap-3 ${className}`}
-    >
+    <motion.a ref={ref as React.Ref<HTMLAnchorElement>} href={href} {...shared}>
       {children}
     </motion.a>
   )

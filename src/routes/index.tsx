@@ -682,9 +682,12 @@ function Buy({
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{ delay: i * 0.1, duration: 0.5 }}
                 onClick={() => setPackId(p.id)}
+                aria-pressed={active}
                 className={`corner-brackets relative flex flex-col p-6 text-left transition-all duration-300 hover:-translate-y-1 ${
-                  active ? 'bg-bg' : 'bg-transparent hover:bg-bg/60'
-                } ${p.best ? 'border border-lime/40' : ''}`}
+                  active
+                    ? 'lime-glow border-2 border-lime bg-bg'
+                    : 'border border-panel bg-transparent hover:border-lime/40 hover:bg-bg/60'
+                }`}
               >
                 {p.best && (
                   <span className="absolute -top-2.5 left-1/2 -translate-x-1/2 whitespace-nowrap bg-lime px-2 py-0.5 font-mono text-[9px] font-bold uppercase tracking-[0.2em] text-bg">
