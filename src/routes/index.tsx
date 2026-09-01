@@ -10,7 +10,6 @@ import {
 import {
   ArrowDownRight,
   ArrowRight,
-  Check,
   ChevronDown,
   Crosshair,
   Leaf,
@@ -695,26 +694,12 @@ function Buy({
                     Best Value
                   </span>
                 )}
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="font-display text-3xl uppercase text-cream">
-                      {p.name}
-                    </h3>
-                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-sage">
-                      {p.label}
-                    </p>
-                  </div>
-                  <span
-                    aria-hidden
-                    className={`mt-1.5 flex h-4 w-4 shrink-0 items-center justify-center border transition-colors ${
-                      active ? 'border-lime bg-lime' : 'border-sage/40'
-                    }`}
-                  >
-                    {active && (
-                      <Check size={11} strokeWidth={3} className="text-bg" />
-                    )}
-                  </span>
-                </div>
+                <h3 className="font-display text-3xl uppercase text-cream">
+                  {p.name}
+                </h3>
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-sage">
+                  {p.label}
+                </p>
                 <p className="mt-4 font-display text-4xl text-lime">
                   ₹{p.price.toLocaleString('en-IN')}
                 </p>
