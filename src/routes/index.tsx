@@ -35,9 +35,12 @@ import {
   NUTRITION,
   PACKS,
   buyUrl,
+  variantGid,
   type FlavorId,
   type PackId,
 } from '~/data/shop'
+import { useCart } from '~/lib/cart'
+import { storefrontConfigured } from '~/lib/shopify/client'
 
 export const Route = createFileRoute('/')({
   component: Home,
@@ -630,6 +633,7 @@ function Buy({
 }) {
   const [packId, setPackId] = React.useState<PackId>('12')
   const pack = PACKS.find((p) => p.id === packId)!
+  const { addLine, busy } = useCart()
 
   return (
     <section id="buy" className="scroll-mt-24 border-y border-panel bg-panel/25">
@@ -722,10 +726,21 @@ function Buy({
             <Counter value={pack.price} prefix="₹" />
           </p>
           <MagneticButton
-            href={buyUrl(flavor, packId)}
-            className="lime-glow mt-2 bg-lime px-10 py-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-bg"
+            // Without a Storefront token the cart cannot be built, so fall back
+            // to the plain Shopify permalink rather than dead-ending the buyer.
+            href={storefrontConfigured ? undefined : buyUrl(flavor, packId)}
+            onClick={
+              storefrontConfigured
+                ? () => {
+                    if (!busy) void addLine(variantGid(flavor, packId))
+                  }
+                : undefined
+            }
+            className={`lime-glow mt-2 bg-lime px-10 py-4 font-mono text-xs font-bold uppercase tracking-[0.25em] text-bg ${
+              busy ? 'pointer-events-none opacity-70' : ''
+            }`}
           >
-            Order {FLAVORS[flavor].name} · {pack.name} <ArrowRight size={14} />
+            Add {FLAVORS[flavor].name} · {pack.name} <ArrowRight size={14} />
           </MagneticButton>
           <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.2em] text-sage">
             Code <span className="text-lime">FOCUS10</span> — 10% off first order

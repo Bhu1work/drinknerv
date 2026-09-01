@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { NervWordmark } from '~/components/NervWordmark'
+import { NewsletterForm } from '~/components/NewsletterForm'
 import { INSTAGRAM_URL } from '~/data/shop'
 
 const LEGAL = [
@@ -70,6 +71,20 @@ export function SiteFooter() {
               </a>
             </li>
           </ul>
+        </div>
+      </div>
+
+      <div className="border-t border-panel">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-5 py-12 md:grid-cols-2 md:items-center">
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-teal">
+              Transmission
+            </p>
+            <h2 className="mt-3 font-display text-3xl uppercase leading-[0.95] text-cream md:text-4xl">
+              Join the <span className="text-lime">frequency</span>
+            </h2>
+          </div>
+          <NewsletterForm />
         </div>
       </div>
 

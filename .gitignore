@@ -8,3 +8,8 @@ routeTree.gen.ts
 
 # Local Netlify folder
 .netlify
+
+# Local env — never commit real tokens
+.env
+.env.*
+!.env.example

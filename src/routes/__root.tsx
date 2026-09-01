@@ -3,6 +3,8 @@ import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import * as React from 'react'
 import { DefaultCatchBoundary } from '~/components/DefaultCatchBoundary'
 import { NotFound } from '~/components/NotFound'
+import { CartDrawer } from '~/components/CartDrawer'
+import { CartProvider } from '~/lib/cart'
 import appCss from '~/styles/app.css?url'
 import { seo } from '~/utils/seo'
 
@@ -50,7 +52,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="antialiased">
-        {children}
+        <CartProvider>
+          {children}
+          <CartDrawer />
+        </CartProvider>
         <Scripts />
       </body>
     </html>

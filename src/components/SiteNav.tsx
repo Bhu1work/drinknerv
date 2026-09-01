@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { Link } from '@tanstack/react-router'
-import { X } from 'lucide-react'
+import { ShoppingBag, X } from 'lucide-react'
 import { NervWordmark } from '~/components/NervWordmark'
 import { COUPON } from '~/data/shop'
+import { useCart } from '~/lib/cart'
 
 const TICKER = [
   `Launch offer — code ${COUPON} for 10% off`,
@@ -32,6 +33,7 @@ function Wordmark() {
 
 export function SiteNav() {
   const [promo, setPromo] = React.useState(true)
+  const { count, openCart } = useCart()
 
   return (
     <>
@@ -82,12 +84,29 @@ export function SiteNav() {
               Blog
             </Link>
           </div>
-          <a
-            href="/#buy"
-            className="bg-lime px-5 py-2.5 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-bg transition-transform hover:scale-[1.04]"
-          >
-            Order Now
-          </a>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={openCart}
+              aria-label={
+                count > 0 ? `Open cart, ${count} items` : 'Open cart, empty'
+              }
+              className="relative flex h-10 w-10 items-center justify-center border border-panel text-sage transition-colors hover:border-lime hover:text-lime"
+            >
+              <ShoppingBag size={16} strokeWidth={1.5} />
+              {count > 0 && (
+                <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center bg-lime px-1 font-mono text-[9px] font-bold text-bg">
+                  {count}
+                </span>
+              )}
+            </button>
+            <a
+              href="/#buy"
+              className="bg-lime px-5 py-2.5 font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-bg transition-transform hover:scale-[1.04]"
+            >
+              Order Now
+            </a>
+          </div>
         </div>
       </nav>
     </>

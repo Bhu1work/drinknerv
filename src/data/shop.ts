@@ -108,3 +108,21 @@ const VARIANTS: Record<FlavorId, Record<PackId, string>> = {
 export function buyUrl(flavor: FlavorId, pack: PackId): string {
   return `${STORE_URL}/cart/${VARIANTS[flavor][pack]}:1`
 }
+
+/**
+ * The Shopify variants carry no artwork, so the cart drawer falls back to the
+ * local can render. Variant titles read like "Orange Coffee / 12-Pack".
+ */
+export function flavorImageFor(variantTitle: string): string | null {
+  if (/orange/i.test(variantTitle)) return FLAVORS.orange.img
+  if (/mango/i.test(variantTitle)) return FLAVORS.mango.img
+  return null
+}
+
+/**
+ * The Storefront API addresses variants by global id rather than the legacy
+ * numeric id the cart permalinks use, so build one from the other.
+ */
+export function variantGid(flavor: FlavorId, pack: PackId): string {
+  return `gid://shopify/ProductVariant/${VARIANTS[flavor][pack]}`
+}
